@@ -40,6 +40,10 @@ It displays the paginated list of stocks, with option to switch pages.
 ### Documentation
 The in depth documentation of the APIs can be found on the swagger link(http://localhost:8080/swagger-ui.html) 
 
+### Tests
+- **Unit Tests** were written using JUnit for all the three layers in the application architecture namely : Controller layer, Service Layer and Data Access Layer.
+- **Integration Tests** were written to cover the complete application flow of all the APIs.
+
 ## Getting started
 
 ### Installing
@@ -129,11 +133,12 @@ Response
 ## Future
 ### Security
 - As of now the APIs are open and unsecure. To begin with we can introduce basic authentication and then introduce JWT based OAuth2 security with spring-security to secure the APIs. 
-- We can also introuce authorization apart from authentication to bring resource level access control.
+- We can also introduce authorization apart from authentication to bring resource level access control.
 - The web dashboard is open and accessible by all. This can also be controlled by form based login authentication and authorization control.
 ### Scalability 
-We are serving the read/write requests directly from the database. If there are more high reads than there are updates, we can introduce a layer of cache to serve the data.
-
+We are serving the read/write requests directly from the database. If there are high reads as compared to updates, we can introduce a layer of cache to serve the data.
+### Profiling
+We can introduce profiling to run integration tests separately when application grows in size.
 
 
 
