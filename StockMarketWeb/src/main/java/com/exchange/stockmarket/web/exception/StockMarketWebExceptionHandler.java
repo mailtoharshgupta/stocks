@@ -77,19 +77,4 @@ public class StockMarketWebExceptionHandler {
                         .build());
     }
 
-    /**
-     * Handler for all internal server errors.
-     *
-     * @param ex
-     * @return {@link ErrorResponse}
-     */
-    @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ErrorResponse> handleInternalServerError(Throwable ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ErrorResponse.builder()
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                        .message(StringUtils.isEmpty(ex.getMessage()) ? HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase() : ex.getMessage())
-                        .build());
-    }
-
 }
