@@ -20,8 +20,7 @@ public class StockMarketUtil {
      * @return {@link Date}
      */
     public static Date getCurrentTime() {
-        TimeZone timeZone = TimeZone.getTimeZone("IST");
-        Calendar rightNow = Calendar.getInstance(timeZone);
+        Calendar rightNow = Calendar.getInstance();
         return rightNow.getTime();
     }
 
