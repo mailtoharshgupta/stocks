@@ -36,7 +36,6 @@ public class StockMarketWebAdminController {
                                @RequestParam(name = "size", defaultValue = "10") int size, Map<String, Object> model) {
         PageRequest pageRequest = new PageRequest(pageNumber, size);
         Page<StockSRO> page = stockService.getAllStocks(pageRequest);
-        model.put("message", "Hello Harsh");
         model.put("stocks", page.getContent());
         model.put("pages", IntStream.range(0, page.getTotalPages()).boxed().collect(Collectors.toList()));
         model.put("currentPage", pageNumber);

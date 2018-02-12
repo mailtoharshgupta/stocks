@@ -78,7 +78,7 @@ public class StockMarketWebServiceController {
      */
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Fetched the stock identified by passed ID successfully"),
-            @ApiResponse(code = 404, message = "Stock stock identified by passed ID does not exist")
+            @ApiResponse(code = 404, message = "Stock identified by passed ID does not exist")
     })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StockSRO> getById(@PathVariable Long id) {
