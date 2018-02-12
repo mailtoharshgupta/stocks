@@ -8,11 +8,11 @@ import org.ho.yaml.Yaml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -30,13 +30,15 @@ public class StartupDataLoader implements IStartupDataLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(StartupDataLoader.class);
 
     private final IStockDAS stockDAS;
+    private final ResourceLoader resourceLoader;
 
     private final Integer minPriceBound = 10;
     private final Integer maxPriceBound = 1000;
 
     @Autowired
-    public StartupDataLoader(IStockDAS stockDAS) {
+    public StartupDataLoader(IStockDAS stockDAS, ResourceLoader resourceLoader) {
         this.stockDAS = stockDAS;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -44,8 +46,10 @@ public class StartupDataLoader implements IStartupDataLoader {
         LOGGER.debug("Loading startup data");
         StopWatch sw = new StopWatch();
         Random random = new Random();
-        List<String> stockNames = getNamesList();
-        List<StockSRO> stockSROS = range(1, 200)
+        List<String> stockNames = Optional.ofNullable(getNamesList())
+                .orElse(Arrays.asList("Apple","Intuit"));
+
+        List<StockSRO> stockSROS = range(0, stockNames.size())
                 .mapToObj(i -> StockSRO.builder()
                         .name(stockNames.get(i))
                         .price(getRandomPrice(random))
@@ -57,8 +61,14 @@ public class StartupDataLoader implements IStartupDataLoader {
     }
 
     private List<String> getNamesList() {
-        //Loading data from names.yml file
-        Map valuesMap = (Map) Yaml.load(ClassLoader.getSystemResourceAsStream("name.yml"));
+        //Loading data from name.yml file
+        Map valuesMap = null;
+        try {
+            valuesMap = (Map) Yaml.load(resourceLoader.getResource("classpath:name.yml").getInputStream());
+        } catch (IOException e) {
+            LOGGER.error("Could not load startup data into memory ..");
+            return null;
+        }
         return (List<String>) valuesMap.get("names");
     }
 
