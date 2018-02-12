@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/app.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Stock Market</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Stock Rate Chart</h2>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>Stock ID</th>
+            <th>Stock Name</th>
+            <th>Price</th>
+            <th>Last Updated</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stock : ${stocks}">
+            <td th:text="${stock.id}"></td>
+            <td th:text="${stock.name}"></td>
+            <td th:text="${stock.price}"></td>
+            <td th:text="${stock.updated}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="pagination">
+        <li th:each="page : ${pages}" th:class="${currentPage==page}?active"><a
+                th:href="${'?pageNumber=' + {page} + '&amp;size=' + {size}}"
+                th:text="${page+1}"></a></li>
+    </ul>
+</div>
+
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
