@@ -3,7 +3,7 @@ package com.exchange.stockmarket;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"com.exchange.stockmarket"})
+@SpringBootApplication
 public class StockMarketApplication {
 
     public static void main(String[] args) {
