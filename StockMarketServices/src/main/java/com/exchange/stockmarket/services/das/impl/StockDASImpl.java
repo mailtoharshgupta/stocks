@@ -2,6 +2,7 @@ package com.exchange.stockmarket.services.das.impl;
 
 import com.exchange.stockmarket.base.model.StockSRO;
 import com.exchange.stockmarket.core.entity.StockEntity;
+import com.exchange.stockmarket.core.exception.InvalidResourceException;
 import com.exchange.stockmarket.core.util.StockMarketUtil;
 import com.exchange.stockmarket.services.das.IStockDAS;
 import com.exchange.stockmarket.services.repository.IStockRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * @author Harsh Gupta on {2/10/18}
@@ -53,6 +55,9 @@ public class StockDASImpl implements IStockDAS {
 
     @Override
     public StockSRO saveOrUpdate(StockSRO stockSRO) {
+        stockSRO = Optional
+                .ofNullable(stockSRO)
+                .orElseThrow(() -> new InvalidResourceException("Can not save Null Stock"));
         LOGGER.debug("Going to save/update stock : {}", stockSRO);
         StockEntity entity = (StockEntity) StockMarketUtil.convert(stockSRO, StockEntity.class);
         StockEntity saved = stockRepository.save(entity);

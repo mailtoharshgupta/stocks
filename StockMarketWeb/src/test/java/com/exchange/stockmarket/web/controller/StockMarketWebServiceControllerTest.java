@@ -1,7 +1,7 @@
 package com.exchange.stockmarket.web.controller;
 
 import com.exchange.stockmarket.StockMarketApplication;
-import com.exchange.stockmarket.base.exception.ResourceNotFoundException;
+import com.exchange.stockmarket.core.exception.ResourceNotFoundException;
 import com.exchange.stockmarket.base.model.StockSRO;
 import com.exchange.stockmarket.core.util.StockMarketUtil;
 import com.exchange.stockmarket.services.web.IStockService;

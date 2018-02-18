@@ -1,7 +1,8 @@
 package com.exchange.stockmarket.web.exception;
 
-import com.exchange.stockmarket.base.exception.InvalidParamException;
-import com.exchange.stockmarket.base.exception.ResourceNotFoundException;
+import com.exchange.stockmarket.core.exception.InvalidParamException;
+import com.exchange.stockmarket.core.exception.InvalidResourceException;
+import com.exchange.stockmarket.core.exception.ResourceNotFoundException;
 import com.exchange.stockmarket.base.model.ErrorResponse;
 import com.exchange.stockmarket.base.model.ValidationError;
 import org.springframework.http.HttpStatus;
@@ -70,6 +71,21 @@ public class StockMarketWebExceptionHandler {
      */
     @ExceptionHandler(InvalidParamException.class)
     public ResponseEntity<ErrorResponse> handleInvalidParamException(InvalidParamException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.builder()
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .message(StringUtils.isEmpty(ex.getMessage()) ? HttpStatus.BAD_REQUEST.getReasonPhrase() : ex.getMessage())
+                        .build());
+    }
+
+    /**
+     * Handler for requests that fail due to invalid resource.
+     *
+     * @param ex
+     * @return {@link ErrorResponse}
+     */
+    @ExceptionHandler(InvalidResourceException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidResourceException(InvalidResourceException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
